@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello</title>
+        <meta charset="utf-8">
+        <meta name="viewport" contect="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="style4.css">
+
+        <!-- Font Awesome JS -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+        <script src="scripts/monitor.js"></script>
+
+
+
+    </head>
+
+    <body>
+        
+        <div class="wrapper">
+            <!-- Sidebar-->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Project Name</h3>
+                    <strong>PS</strong>
+                </div>
+    
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-home"></i>
+                            Device
+                        </a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li>
+                                <a href="#">Device 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Device 2</a>
+                            </li>
+                            <li>
+                                <a href="#">Device 3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-briefcase"></i>
+                            Overview
+                        </a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-copy"></i>
+                            History
+                        </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a href="#">Device 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Device 2</a>
+                            </li>
+                            <li>
+                                <a href="#">Device 3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-image"></i>
+                            Developing...
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-question"></i>
+                            FAQ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-paper-plane"></i>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+    
+            </nav>
+
+            <!-- Page Content Holder-->
+            <div id="content">
+            
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+    
+                        <button type="button" id="sidebarCollapse" class="navbar-btn">
+                            <i class="fas fa-align-left"></i>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-align-justify"></i>
+                        </button>
+
+                        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav ml-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li> 
+                            </ul>
+                        </div> -->
+
+                    </div>
+                </nav>
+
+                <div class="container vh-100 style="max-width:900px>
+                    <div class="row">
+                        <div class="card-deck mt-4">
+                            <!-- Card 1 -->
+                            <div class="col-sm-6 card-custom">
+                                <div class="card bg-light" style="width: 30rem;" id="device-card-1">
+                                    <div class="card-header" id="device-header-1">Device 1:</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="Status-1">Current Status</h5>
+                                        <a href="#" class="btn btn-primary">Know more</a>
+                                    </div>
+                                    <div class="card-footer text-muted">Last Update: </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+
+                            <!-- Card 2 -->
+                            <div class="col-sm-5 card-custom">
+                                <div class="card bg-light" style="width: 30rem;" id="device-card-2">
+                                    <div class="card-header" id="device-header-2">Device 2:</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="Status-2">Current Status</h5>
+                                        <a href="#" class="btn btn-primary">Know more</a>
+                                    </div>
+                                    <div class="card-footer text-muted">Last Update: </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card-deck mt-5">
+                            <!-- Card 3 -->
+                            <div class="col-sm-6 card-custom">
+                                <div class="card bg-light" style="width: 30rem;" id="device-card-3">
+                                    <div class="card-header" id="device-header-3">Device 3:</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="Status-3">Current Status</h5>
+                                        <a href="#" class="btn btn-primary">Know more</a>
+                                    </div>
+                                    <div class="card-footer text-muted">Last Update: </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1"></div>
+
+                            <!-- Card 4 -->
+                            <div class="col-sm-5 card-custom">
+                                <div class="card bg-light" style="width: 30rem;" id="device-card-4">
+                                    <div class="card-header" id="device-header-4">Device 4:</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="Status-4">Current Status</h5>
+                                        <a href="#" class="btn btn-primary">Know more</a>
+                                    </div>
+                                    <div class="card-footer text-muted">Last Update: </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                
+
+
+
+
+            </div>
+
+
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+
+    </body>
+</html>

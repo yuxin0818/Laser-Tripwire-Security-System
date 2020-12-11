@@ -1,67 +1,104 @@
 from flask import Flask, request, jsonify, json, render_template
-from database import add_device_id, add_device_info, check_exist, get_dictionary, get_id
+import database
+import logging
 
 app = Flask(__name__)
 
 if __name__ == "__main__":
     app.run()
 
+DEVICES_LABEL = "devices"
+DEVICE_ID_LABEL = "device_id"
+DEVICE_INFO_LABEL = "device_info"
+STATUS_LABEL = "status"
+STATUS_OK_LABEL = "OK"
+STATUS_ERROR_LABEL = "ERROR"
 
 @app.route("/")
 def hello_world():
     return render_template('index.html')
 
-
-# pi api
-@app.route('/api/v1/devices/device_info', methods=['POST'])
-def get_device_info():
-    req_data = request.get_json()
-
-    device_id = req_data['id']
-    device_status = req_data['status']
-    device_event = req_data['event']
-
-    if not check_exist(device_id):
-        add_device_id(device_id)
-        add_device_info(device_id, (device_status, device_event))
-    else:
-        add_device_info(device_id, (device_status, device_event))
-        
-
+@app.route("/api/v1/devices", methods=['GET'])
+def get_all_devices():
     return jsonify({
-        "status": "ok",
+        DEVICES_LABEL: database.get_all_devices(),
+    })
+
+@app.route("/api/v1/device/<device_id>", methods=['GET'])
+def get_device_info(device_id):
+    status, msg, info = database.get_device_info(device_id)
+    if status != database.Status.OK:
+        print("Failed to get the device info: %s" % msg)
+        return jsonify({
+            STATUS_LABEL: STATUS_ERROR_LABEL,
         })
+    return jsonify({
+        STATUS_LABEL: STATUS_OK_LABEL,
+        DEVICE_INFO_LABEL: info,
+    })   
 
-@app.route('/api/v1/devices/incident_info', methods=['POST'])
-def get_incident_status():
-    incident_status = request.get_json()
+@app.route("/api/v1/device/create", methods=['POST'])
+def register_device():
+    args = request.get_json()
+    device_id = args[DEVICE_ID_LABEL]
+    status, msg = database.create_new_device(device_id)
+    if status != database.Status.OK:
+        print("Failed to register the new device: %s" % msg)
+        return jsonify({
+            STATUS_LABEL: STATUS_ERROR_LABEL,
+        })
+    return jsonify({
+        STATUS_LABEL: STATUS_OK_LABEL,
+    })   
 
-    cur_status = incident_status['']
+@app.route("/api/v1/device/incident", methods=['POST'])
+def handle_incident():
+    args = request.get_json()
+    device_id = args[DEVICE_ID_LABEL]
+    status, msg = database.record_incident(device_id)
+    if status != database.Status.OK:
+        print("Failed to record incident: %s" % msg)
+        return jsonify({
+            STATUS_LABEL: STATUS_ERROR_LABEL,
+        })
+    return jsonify({
+        STATUS_LABEL: STATUS_OK_LABEL,
+    })
+
+@app.route("/api/v1/device/ping", methods=['POST'])
+def handle_heartbeat():
+    args = request.get_json()
+    device_id = args[DEVICE_ID_LABEL]
+    status, msg = database.record_heartbeat(device_id)
+    if status != database.Status.OK:
+        print("Failed to record ping: %s" % msg)
+        return jsonify({
+            STATUS_LABEL: STATUS_ERROR_LABEL,
+        })
+    return jsonify({
+        STATUS_LABEL: STATUS_OK_LABEL,
+    })
+
+@app.route("/api/v1/device/reset", methods=['POST'])
+def handle_reset():
+    args = request.get_json()
+    device_id = args[DEVICE_ID_LABEL]
+    status, msg = database.record_reset(device_id)
+    if status != database.Status.OK:
+        print("Failed to record ping: %s" % msg)
+        return jsonify({
+            STATUS_LABEL: STATUS_ERROR_LABEL,
+        })
+    return jsonify({
+        STATUS_LABEL: STATUS_OK_LABEL,
+    })
 
 # serve javascript
 @app.route('/scripts/monitor.js')
 def get_scripts():
     return app.send_static_file('scripts/monitor.js')
 
-
 # serve css
 @app.route('/style4.css')
 def get_css():
     return app.send_static_file('css/style4.css')
-
-# script api
-@app.route('/api/v1/request/get_id', methods=['GET'])
-def request_id():
-    key_list = get_id()
-    return jsonify({
-        "devices": key_list,
-    })
-
-@app.route('/api/v1/request/get_each_info', methods=['GET'])
-def request_info():
-    device_id = request.args.get('device_id')
-    data_dict = get_dictionary()
-    info_list = data_dict[device_id]
-    return jsonify({
-        "result": info_list,
-    })

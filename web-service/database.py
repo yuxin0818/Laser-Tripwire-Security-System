@@ -14,9 +14,11 @@ devices = ['Front Door', 'Garage']
     }
 '''
 
+LAST_PING_TIME = "last_ping_time"
+LAST_INCIDENT_TIME = "last_incident_time"
+RESET_TIME = "reset_time"
+
 db = {
-    'Front Door': {},
-    'Garage': {},
 }
 
 class Status(Enum):
@@ -27,44 +29,43 @@ class Status(Enum):
 def create_new_device(device_id):
     if device_id not in db:
         db[device_id] = {
-            "last_ping_time": 0,
-            "last_incident_time": 0,
-            "reset_time": 0,
+            LAST_PING_TIME: 0,
+            LAST_INCIDENT_TIME: 0,
+            RESET_TIME: 0,
         }
         print("Device %s added successfully." % device_id)
         return Status.OK, None
     else:
-        print("Device %s exists." % device_id)
+        return Status.ERROR, "Device %s exists" % device_id
 
 def record_incident(device_id):
     cur_time = time.time()
     if device_id not in db:
-        print("Device %s does not exist")
-        return 
+        return Status.ERROR, "Device %s does not exist" % device_id
+    db[device_id][LAST_INCIDENT_TIME] = cur_time
+    return Status.OK, None
 
-def add_device_id(id):
-    check_connect[id] = []
-    devices.append(id)
+def record_heartbeat(device_id):
+    cur_time = time.time()
+    if device_id not in db:
+        return Status.ERROR, "Device %s does not exist" % device_id
+    db[device_id][LAST_PING_TIME] = cur_time
+    return Status.OK, None
 
-def add_device_info(id, info):
-    current_info = get_current_device_info(id)
-    current_info.append(info)
-    check_connect[id] = current_info
+def record_reset(device_id):
+    cur_time = time.time()
+    if device_id not in db:
+        return Status.ERROR, "Device %s does not exist" % device_id
+    db[device_id][RESET_TIME] = cur_time
+    return Status.OK, None
 
-def get_current_device_info(id):
-    return check_connect[id]
+def get_all_devices():
+    return list(db.keys())
 
-def check_exist(id):
-    return id in check_connect
-
-def get_dictionary():
-    print(check_connect)
-    return check_connect
-
-def get_id():
-    return devices
-
-
+def get_device_info(device_id):
+    if device_id not in db:
+        return Status.ERROR, "Device %s does not exist" % device_id, None
+    return Status.OK, None, db[device_id]
 
 
 

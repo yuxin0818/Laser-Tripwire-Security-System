@@ -1,9 +1,6 @@
 from enum import Enum
 import time
 
-devices = ['Front Door', 'Garage']
-
-
 '''
     DB = {
         key : {
@@ -21,6 +18,8 @@ RESET_TIME = "reset_time"
 db = {
 }
 
+all_devices = []
+
 class Status(Enum):
     OK = 1
     ERROR = 2
@@ -28,6 +27,7 @@ class Status(Enum):
 
 def create_new_device(device_id):
     if device_id not in db:
+        all_devices.append(device_id)
         db[device_id] = {
             LAST_PING_TIME: 0,
             LAST_INCIDENT_TIME: 0,
@@ -60,7 +60,7 @@ def record_reset(device_id):
     return Status.OK, None
 
 def get_all_devices():
-    return list(db.keys())
+    return all_devices
 
 def get_device_info(device_id):
     if device_id not in db:
